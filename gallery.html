@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2025 Cambodia - Korea Pediatric Heart Forum Photo Gallery</title>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Source Sans Pro', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f5f7fa;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #1a5fb4, #3584e4);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .header h1 {
+            font-size: 42px;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+        
+        .header p {
+            font-size: 20px;
+            font-weight: 400;
+            opacity: 0.9;
+        }
+        
+        .gallery {
+            width: 100%;
+            display: block;
+            min-height: 100vh;
+            background-color: #f5f7fa;
+            padding: 60px 0;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: auto;
+            padding: 0 20px;
+        }
+        
+        .gallery .gallery-filter {
+            padding: 0 15px;
+            width: 100%;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .gallery .gallery-filter .filter-item {
+            color: #1a5fb4;
+            font-size: 16px;
+            font-weight: 600;
+            border: 2px solid #1a5fb4;
+            text-transform: uppercase;
+            display: inline-block;
+            border-radius: 30px;
+            margin: 0 8px 15px;
+            cursor: pointer;
+            padding: 10px 25px;
+            line-height: 1.2;
+            transition: all 0.3s ease;
+            background-color: white;
+        }
+        
+        .gallery .gallery-filter .filter-item:hover {
+            background-color: #e9f2fd;
+        }
+        
+        .gallery .gallery-filter .filter-item.active {
+            color: white;
+            border-color: #1a5fb4;
+            background: #1a5fb4;
+        }
+        
+        .gallery .row {
+            display: flex;
+            flex-wrap: wrap;
+            margin: 0 -15px;
+        }
+        
+        .gallery .gallery-item {
+            width: calc(100% / 4);
+            padding: 15px;
+            transition: all 0.5s ease;
+            cursor: pointer;
+        }
+        
+        .gallery .gallery-item-inner {
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .gallery .gallery-item-inner:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .gallery .gallery-item-inner img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            display: block;
+            transition: all 0.5s ease;
+        }
+        
+        .gallery .gallery-item-inner .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(26, 95, 180, 0.7);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+        
+        .gallery .gallery-item-inner:hover .overlay {
+            opacity: 1;
+        }
+        
+        .gallery .gallery-item-inner .overlay i {
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+        
+        .gallery .gallery-item-inner .overlay p {
+            font-size: 16px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        
+        .gallery .gallery-item.show {
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .gallery .gallery-item.hide {
+            display: none;
+        }
+        
+        /* Modal styles for full photo view */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.9);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .modal.show {
+            display: block;
+            opacity: 1;
+        }
+        
+        .modal-content {
+            position: relative;
+            margin: auto;
+            display: block;
+            width: auto;
+            max-width: 90%;
+            max-height: 80vh;
+            top: 50%;
+            transform: translateY(-50%);
+            animation: zoom 0.3s ease;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        @keyframes zoom {
+            from {transform: translateY(-50%) scale(0.9);}
+            to {transform: translateY(-50%) scale(1);}
+        }
+        
+        .modal-caption {
+            margin: 15px auto;
+            text-align: center;
+            color: #fff;
+            font-size: 18px;
+            font-weight: 600;
+            max-width: 80%;
+        }
+        
+        .close {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: #fff;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+            z-index: 1001;
+        }
+        
+        .close:hover {
+            color: #bbb;
+        }
+        
+        .modal-nav {
+            position: absolute;
+            top: 50%;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 20px;
+            transform: translateY(-50%);
+            z-index: 1001;
+        }
+        
+        .nav-btn {
+            color: #fff;
+            font-size: 40px;
+            cursor: pointer;
+            background-color: rgba(0, 0, 0, 0.5);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.3s;
+        }
+        
+        .nav-btn:hover {
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+        
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+        
+        @media(max-width: 1200px) {
+            .gallery .gallery-item {
+                width: calc(100% / 3);
+            }
+        }
+        
+        @media(max-width: 991px) {
+            .gallery .gallery-item {
+                width: calc(100% / 2);
+            }
+            
+            .modal-content {
+                max-width: 95%;
+            }
+            
+            .nav-btn {
+                font-size: 30px;
+                width: 40px;
+                height: 40px;
+            }
+        }
+        
+        @media(max-width: 767px) {
+            .header h1 {
+                font-size: 32px;
+            }
+            
+            .header p {
+                font-size: 18px;
+            }
+            
+            .gallery .gallery-item {
+                width: 100%;
+            }
+            
+            .gallery .gallery-filter .filter-item {
+                margin-bottom: 10px;
+                padding: 8px 15px;
+                font-size: 14px;
+            }
+            
+            .modal-content {
+                max-width: 100%;
+                max-height: 60vh;
+                border-radius: 0;
+            }
+            
+            .close {
+                top: 10px;
+                right: 15px;
+                font-size: 30px;
+            }
+            
+            .nav-btn {
+                font-size: 24px;
+                width: 35px;
+                height: 35px;
+            }
+        }
+        
+        .footer {
+            background-color: #1a5fb4;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+        }
+        
+        .footer p {
+            margin: 0;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>2025 Cambodia - Korea Hebron Medical Center</h1>
+        <p>18th Anniversary Template - Photo Gallery</p>
+    </div>
+    
+    <div class="gallery">
+        <div class="container">
+            <div class="gallery-filter">
+                <span class="filter-item active" data-filter="all">All Photos</span>
+                <span class="filter-item" data-filter="forum">Forum Sessions</span>
+                <span class="filter-item" data-filter="award">Award Ceremonies</span>
+                <span class="filter-item" data-filter="lucky">Lucky Draw</span>
+                <span class="filter-item" data-filter="group">Group Photos</span>
+            </div>
+            
+            <div class="row">
+                <!-- Forum Sessions -->
+                <div class="gallery-item forum">
+                    <div class="gallery-item-inner">
+                        <img src="https://scontent.fpnh8-2.fna.fbcdn.net/v/t39.30808-6/487206267_1195989748979649_1083406260579035831_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=127cfc&_nc_eui2=AeEXPdDDTF_fcw5GOehqtf2m5t0FwzwHnjrm3QXDPAeeOrdjgcJ2-3Ij4lKCStTDTUjQKnFtA3GJansrxOX9DEJ-&_nc_ohc=JGERRFcJaR4Q7kNvwHaaySo&_nc_oc=AdmzlHtN9JPAhMPdXKboRwuJFKLaW2dKmXnqC3ZQ0ouvHrA0E3LRu3j1t-SWBAzkH0c&_nc_zt=23&_nc_ht=scontent.fpnh8-2.fna&_nc_gid=9Y7Y5XYr0lIlK32pisPxqQ&oh=00_AfUkjuKQMFjQDfAJ2MrScLvQn3SeEHO3nQc14Bhnfc0zew&oe=68AF5BF2" alt="Forum Discussion">
+                        <div class="overlay">
+                            <i class="material-icons">groups</i>
+                            <p>Forum Discussion</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="gallery-item forum">
+                    <div class="gallery-item-inner">
+                        <img src="https://scontent.fpnh8-3.fna.fbcdn.net/v/t39.30808-6/486638119_1195992168979407_4066410040089274788_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=127cfc&_nc_eui2=AeEXo9GSs8A15Gc9EuMxbv3EtZIuRT0cWNK1ki5FPRxY0sJW3hdelmEk6ILL7TAl9va8yFCwzcfqi-2hLiSinPrM&_nc_ohc=oPXtptxe01kQ7kNvwEcraqF&_nc_oc=Adk2Q0QqPW_13FyqswGBO8DIb80xiWNcZgpYU7d9Epc0B0NktlO-dEO0P0wB49us8RQ&_nc_zt=23&_nc_ht=scontent.fpnh8-3.fna&_nc_gid=iefEBgl4yW8LEvHQTQUhNw&oh=00_AfUqgyJQbHJmXdYb0pQap0MTrY1r2X8gt-SJITCEhupmXg&oe=68AF4084" alt="Professional Exchange">
+                        <div class="overlay">
+                            <i class="material-icons">forum</i>
+                            <p>Professional Exchange</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="gallery-item forum">
+                    <div class="gallery-item-inner">
+                        <img src="https://scontent.fpnh8-1.fna.fbcdn.net/v/t39.30808-6/486502125_1195988178979806_1865689494926534519_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=127cfc&_nc_eui2=AeG2DtLdG-73e75DNf0VF8JWMBRkslezALkwFGSyV7MAucIcbiT41rY1MVLVtFkwI5XuDhoiOss75Ro-t0GWK7Oj&_nc_ohc=8Q503HxGAOEQ7kNvwGOLAiR&_nc_oc=Adld_0B9gGC4_3qy9yRmYPMWGnrzAFgkHpQCtIhCWX4jJ48xf4n_PSurocJdQ7mZxPQ&_nc_zt=23&_nc_ht=scontent.fpnh8-1.fna&_nc_gid=tgfc4lpuXQVUbTP5ft1UKA&oh=00_AfUm2Lfe8V73X6YRD8KyoJdkRYl_z-5bqKOsimZLvUDATA&oe=68AF6479" alt="Medical Presentation">
+                        <div class="overlay">
+                            <i class="material-icons">person</i>
+                            <p>Medical Presentation</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="gallery-item forum">
+                    <div class="gallery-item-inner">
+                        <img src="https://scontent.fpnh8-3.fna.fbcdn.net/v/t39.30808-6/486492772_1195987622313195_2942786207255438577_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=127cfc&_nc_eui2=AeHqTMsV579-5m9rOYtyC77uLdPeyITgnl4t097IhOCeXjA98RVoF19rYyL7sC42QLXc2SNWgXqPMCoKEfNZUfZZ&_nc_ohc=JcMthNcO1vEQ7kNvwF6ZeRM&_nc_oc=Adlug0o7k6SYB610xn3vZx73379dxgAK3QyPwz7aSPiH9bE6rYggjHZA3dTeT1QG5RE&_nc_zt=23&_nc_ht=scontent.fpnh8-3.fna&_nc_gid=q3yR2jzB208oVG8UZe6kmA&oh=00_AfXZuh6LQaW25ApjopMsbXABVWzf03zX4FqFHl4by6I15A&oe=68AF5CEC" alt="Panel Discussion">
+                        <div class="overlay">
+                            <i class="material-icons">groups</i>
+                            <p>Panel Discussion</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Award Ceremonies -->
+                <div class="gallery-item award">
+                    <div class="gallery-item-inner">
+                        <img src="https://scontent.fpnh8-3.fna.fbcdn.net/v/t39.30808-6/486938813_1195990025646288_6040724636060352034_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=127cfc&_nc_eui2=AeFgdnUESC1dJVzBqbiu-Fl-cdmQfZzDMM5x2ZB9nMMwzimeA50oVQRPwrB68-Pvgw5DYgflFaR0rU5HuTvG7UQV&_nc_ohc=5sfmreReC8sQ7kNvwGg9p2t&_nc_oc=Adl8Uz-zclimk5-xcdDW3_De95NMVp51DWGjUFH6mky82ccxG5nwLDJKXiZ5DW0am18&_nc_zt=23&_nc_ht=scontent.fpnh8-3.fna&_nc_gid=ppS0N7q4tMSCL5u2W41mxA&oh=00_AfUCt9Xmi3GaLrwrmDkl0gsXGr_ZyPA788p5aoviHdUsbw&oe=68AF496F" alt="Conference Opening">
+                        <div class="overlay">
+                            <i class="material-icons">event</i>
+                            <p>Conference Opening</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="gallery-item award">
+                    <div class="gallery-item-inner">
+                        <img src="https://scontent.fpnh8-2.fna.fbcdn.net/v/t39.30808-6/486512102_1195991822312775_1332761264247053209_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=127cfc&_nc_eui2=AeF2x6XRx5rI6IUTLXQlzFQcZLtzFq2MchNku3MWrYxyE03gQ-JgT1Ri0P_7rDaRbSyp0NtdLlavQU1_b5RZHwNp&_nc_ohc=5yzuDPZJMNYQ7kNvwGeVVbR&_nc_oc=AdnWf7oIcEPUs_cxIo8eZhaL9R8AYd-bu2b4QqayV0HzitkKpUcUVpyFLtHHza8WQLM&_nc_zt=23&_nc_ht=scontent.fpnh8-2.fna&_nc_gid=aXR1Sqe-6gV3rYiRn1gAlg&oh=00_AfUhSKf45UizRhhNTtRKGAuEHErruTByemtVaGgGJ60ldA&oe=68AF5258" alt="Award Presentation">
+                        <div class="overlay">
+                            <i class="material-icons">emoji_events</i>
+                            <p>Award Presentation</p>
+                        </div>
+                    </div>
+                </div>
+                
+                
+                
+                <div class="gallery-item award">
+                    <div class="gallery-item-inner">
+                        <img src="https://scontent.fpnh8-2.fna.fbcdn.net/v/t39.30808-6/487077859_1195988125646478_2859576594720804787_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=127cfc&_nc_eui2=AeHB6wZdIvsuTwJ1pRhz0kD13V83y-hjGkbdXzfL6GMaRlPbN0F6px4tnSuDBaRXPhfbs9PHlFwTGfoDiynfqb4b&_nc_ohc=TZbBFsQfJnUQ7kNvwGL-rt_&_nc_oc=AdnCUoBkwLj2HR3-VZXCCC0GrRDJQe5PkOJRCWaYdNMYhKjEXEtJikzyKp02CvlPJaE&_nc_zt=23&_nc_ht=scontent.fpnh8-2.fna&_nc_gid=tV12mnoPlNx3YGjo9RdZHQ&oh=00_AfV-Mtkqn39MaT7atHAbvKlAN5QRpUyx6plGQBsEB7kjvA&oe=68AF6F1E" alt="Group Award">
+                        <div class="overlay">
+                            <i class="material-icons">stars</i>
+                            <p>Group Award</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="gallery-item award">
+                    <div class="gallery-item-inner">
+                        <img src="https://scontent.fpnh8-2.fna.fbcdn.net/v/t39.30808-6/485904274_1195990248979599_5782112902112053418_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=127cfc&_nc_eui2=AeER1kUdVG7KwLNvKGTwh-Z3HNiw-9u1Fm0c2LD727UWbXDWMPvaJiYyzFxcYHhfgSN2tT-eEbtjM3wC7-OUNY-m&_nc_ohc=rFEXFZY2zwAQ7kNvwFm_XWS&_nc_oc=AdmXGklnf9NTn4wWVjjQFjKNFJivhdfWOpNeNGOpRmzjVfLZXbwIn6mjwxfuzq-GNx8&_nc_zt=23&_nc_ht=scontent.fpnh8-2.fna&_nc_gid=sBabiSKMMVDX2YVb68GrDQ&oh=00_AfVGY4CiwFst_7aLBtraZ77M4UFWkzKam69ZpicBLlEfYQ&oe=68AF4B7C" alt="Applause Moment">
+                        <div class="overlay">
+                            <i class="material-icons">celebration</i>
+                            <p>Applause Moment</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="gallery-item award">
+                    <div class="gallery-item-inner">
+                        <img src="https://scontent.fpnh8-2.fna.fbcdn.net/v/t39.30808-6/486703778_1195987735646517_5666988973345728188_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=127cfc&_nc_eui2=AeF30Ul7xtgMhtUAvCIZ2C2soyoD5MrZ29KjKgPkytnb0tfHB7V3XqyKvuxEL2rmLSxi5S3LJUXfiR_DMLlSkFFn&_nc_ohc=P_6s4d9pvGgQ7kNvwF8GtqU&_nc_oc=AdmwlZb2cZLSaztfU4_qg3F9QSDxRs2s80eoH1D1Y3G_y_uw01wbTvYAlbAJPmkhBSI&_nc_zt=23&_nc_ht=scontent.fpnh8-2.fna&_nc_gid=GpQltgyrjlKMLhp0n-NEYw&oh=00_AfW9nI6KhgNhjG5915KUcQ0nji_HXDu9JgxAlWjdXWFM9Q&oe=68AF55D9" alt="Award Winner">
+                        <div class="overlay">
+                            <i class="material-icons">workspace_premium</i>
+                            <p>Award Winner</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="gallery-item award">
+                    <div class="gallery-item-inner">
+                        <img src="https://scontent.fpnh8-3.fna.fbcdn.net/v/t39.30808-6/486346017_1195987715646519_2169742417066550647_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=127cfc&_nc_eui2=AeG1Y80uVq6v5J2nPIgG1ICe0wUUfvsdQMHTBRR--x1AwTd7zmQetH6BGSJFJZXB-qDodKNglRKN9LsV38FC3jiO&_nc_ohc=DEAtUAslCXoQ7kNvwGsrjpe&_nc_oc=Adll6aippHfIzvTGSUxyFDBNNFLKRI54g7tttbDNh6ygvVweWvwuAJF7FqclDw2Vijc&_nc_zt=23&_nc_ht=scontent.fpnh8-3.fna&_nc_gid=PECS9REgSa-_PL1KGlQ15w&oh=00_AfV4U9ChOwbJxvl0l4Mu0qGDEGnvJPZBZd2OoP3Si3Fcgw&oe=68AF6A53" alt="Award Ceremony">
+                        <div class="overlay">
+                            <i class="material-icons">card_membership</i>
+                            <p>Award Ceremony</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="gallery-item award">
+                    <div class="gallery-item-inner">
+                        <img src="https://scontent.fpnh8-2.fna.fbcdn.net/v/t39.30808-6/486400183_1195267259051898_1301102527738377349_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=127cfc&_nc_eui2=AeFNqXJ5RP1h4FYs_9GSb7VkBeRPh2phhw4F5E-HamGHDqTKRpEu7-vGoaXii1a7x8_So6iT0zWc-2KhJbPriCI8&_nc_ohc=l_kstCUaFs8Q7kNvwFeAJsy&_nc_oc=AdkntTyuTxtvtqwiyuTgChsyO_xHDe2trYS5s713j2amlzAHUuW_reLrUPB27x3gsu0&_nc_zt=23&_nc_ht=scontent.fpnh8-2.fna&_nc_gid=t7JaCmvwE-Cgas7VY5KCbQ&oh=00_AfXjAYoqNW2kTMjppSXM3d4xD0kozLwpQ1_C-5yrAGsv0g&oe=68AF5928" alt="Doctors Recognition">
+                        <div class="overlay">
+                            <i class="material-icons">health_and_safety</i>
+                            <p>Doctors Recognition</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Lucky Draw -->
+                <div class="gallery-item lucky">
+                    <div class="gallery-item-inner">
+                        <img src="https://scontent.fpnh8-3.fna.fbcdn.net/v/t39.30808-6/486567040_1195269835718307_1612832838778947218_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=127cfc&_nc_eui2=AeGTTp33fFu4SEKVQlRQ90cTSoYu9sC3El5Khi72wLcSXsG4hCZApGw3uQ-lx1Q30wJPVursJFh2nQdk3bOlTbCA&_nc_ohc=Wz1CmEhB2LkQ7kNvwG3KUbA&_nc_oc=AdkAJLZowt0e3CAgIjzWKQaIf9pdZhPJ2ST6L2bX_fLdwlsifQmhT-QK48LUAck-fkI&_nc_zt=23&_nc_ht=scontent.fpnh8-3.fna&_nc_gid=FSpW3rOz04GqNhIsZKRNZA&oh=00_AfXtYzf3gIWfAu5VdduReSFajLXO0PS9cbcyO_wpbUtCnA&oe=68AF661C" alt="Lucky Draw Queue">
+                        <div class="overlay">
+                            <i class="material-icons">redeem</i>
+                            <p>Lucky Draw Queue</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="gallery-item lucky">
+                    <div class="gallery-item-inner">
+                        <img src="https://scontent.fpnh8-3.fna.fbcdn.net/v/t39.30808-6/487029250_1195269199051704_6821547222184585032_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=127cfc&_nc_eui2=AeENSR5sV7ceod0UthrQXjZrM_HUri7ALzcz8dSuLsAvN6ECD8SYNi4ixgk9D7LyJlEUlN0gYZtnkwxKm1b9TlfL&_nc_ohc=m-dKkezR0fMQ7kNvwFTmQ5T&_nc_oc=AdkOGiNd1GajSiJsa_yB2NfEbk7OhU9V0rfKJ2kBqjrTXHhv-ctJ_xcrXi4E12RLkVo&_nc_zt=23&_nc_ht=scontent.fpnh8-3.fna&_nc_gid=UZZnDa809q59394XQOFGug&oh=00_AfUmV-Q2xXt0xOAl70ZeeF6o67NFooLA34jvBkbh9avgAQ&oe=68AF5807" alt="Prize Distribution">
+                        <div class="overlay">
+                            <i class="material-icons">card_giftcard</i>
+                            <p>Prize Distribution</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="gallery-item lucky">
+                    <div class="gallery-item-inner">
+                        <img src="https://scontent.fpnh8-1.fna.fbcdn.net/v/t39.30808-6/486357051_1195266899051934_8340630198513848251_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=127cfc&_nc_eui2=AeHTNjq4Hoykg55GRIGgZfvNiBfZSUJyln6IF9lJQnKWfqfeKMQmXFkh2n_s6wyJS340ESyDR4OdfPSnD6b6Oy5E&_nc_ohc=Hg3psMCFGOgQ7kNvwGQ_Ng1&_nc_oc=AdmQprqc-PyjoQxtnpthmFXsdZtlKdxdUlAPK_KpRwI9jbxkz-ONBACR5wAwdrzwhnM&_nc_zt=23&_nc_ht=scontent.fpnh8-1.fna&_nc_gid=gGOW5BTMglvHG3jz--Q6pg&oh=00_AfVvP8Ddy__UD5XAEdK0d9nAkMWsOLJGn6vtRsSMEqMKBA&oe=68AF42DD" alt="Lucky Draw Event">
+                        <div class="overlay">
+                            <i class="material-icons">casino</i>
+                            <p>Lucky Draw Event</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Group Photos -->
+                <div class="gallery-item group">
+                    <div class="gallery-item-inner">
+                        <img src="https://scontent.fpnh8-2.fna.fbcdn.net/v/t39.30808-6/486504809_1195269209051703_1777362739474246781_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=127cfc&_nc_eui2=AeFdT9ahAqCv6jY6OLXPM1mGK2dIcwC8rYArZ0hzALytgM0aIJFSDG7_KSrrtBKMh8Yp2CBmH41x7mtJ0qqeAS-5&_nc_ohc=EuvxeSqfCjAQ7kNvwHfEGO4&_nc_oc=Adn8enLWbWErWY2c6qHunfpMzb9yPXYSuDVIhdIpI8oXMj5sSgjuWGrrS90JPUoZ3AY&_nc_zt=23&_nc_ht=scontent.fpnh8-2.fna&_nc_gid=plMshbQxiilLlI1RuLaolQ&oh=00_AfVI9SP-U91MTQWOgQlu9U8Ol0ZGsjuN9U38yg_bp3-2Dw&oe=68AF50DB" alt="Conference Group Photo">
+                        <div class="overlay">
+                            <i class="material-icons">photo_camera</i>
+                            <p>Conference Group Photo</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="gallery-item group">
+                    <div class="gallery-item-inner">
+                        <img src="https://scontent.fpnh8-1.fna.fbcdn.net/v/t39.30808-6/486511711_1195269505718340_8801435123492022860_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=127cfc&_nc_eui2=AeG4qoVDrCRMFC71-UHZt1gXNOmyuysc8hk06bK7KxzyGWUf_Lz6zFZ1r6urv_eQmbY6bB6toxqhYIzW1NKkMiDB&_nc_ohc=LlKEmG7DvO8Q7kNvwHkFGSK&_nc_oc=AdnxYWXshV0Qh_CL9xmepunT6dwpDE7B2ZkdVYcgMnC0xbqe_2BW9I6g31E9C79R6RA&_nc_zt=23&_nc_ht=scontent.fpnh8-1.fna&_nc_gid=1ipfGZTTGQiDfzypE5y0ow&oh=00_AfWQxDhZNQb5XuReVPleY-hzC9yfd9_ikwrvBDA1CNgSYw&oe=68AF6C0E" alt="Meeting Group">
+                        <div class="overlay">
+                            <i class="material-icons">people</i>
+                            <p>Meeting Group</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="gallery-item group">
+                    <div class="gallery-item-inner">
+                        <img src="https://scontent.fpnh8-2.fna.fbcdn.net/v/t39.30808-6/486328812_1195266402385317_3465289874555165726_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=127cfc&_nc_eui2=AeH8WqQRxndW11Jnwh1O2flIWXmHBTE-oTRZeYcFMT6hNOJTMWJA5KimUq9l-rt3CNlwr66uJnnuv24ULa-tEQNi&_nc_ohc=cR9fFuSwar0Q7kNvwF_7SJp&_nc_oc=AdkRaA0UQ9-u8Su-Fox1X1sXb_gj1g6Vjnr8hMD8x6xFezpIT7aXtuZeIDkL2eZfrMg&_nc_zt=23&_nc_ht=scontent.fpnh8-2.fna&_nc_gid=FQy8hJEOJrCpHK3-VECBuw&oh=00_AfX-FeRSJnFc_4oBOXCUrRdh13O3ycvkxtrB2zcJZK-wdg&oe=68AF6F04" alt="Team Photo">
+                        <div class="overlay">
+                            <i class="material-icons">diversity_3</i>
+                            <p>Team Photo</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="gallery-item group">
+                    <div class="gallery-item-inner">
+                        <img src="https://scontent.fpnh8-1.fna.fbcdn.net/v/t39.30808-6/486732086_1195266409051983_3036082443086416601_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=127cfc&_nc_eui2=AeEisgw1UNdEifjcVtRsVRRogBBJY3IfkhWAEEljch-SFTYE3FEenSnaZU_MYY8pcvUaXm9Nw_qNbp7IYnKNDIOq&_nc_ohc=k5pdi3ENqVUQ7kNvwGujul5&_nc_oc=AdkLJeJJNuroU1QXoR4RWQ_SCLO3VodmwCeZuh7AOUOcjxc6Y3uMqZ2zUQOKYHj1gDs&_nc_zt=23&_nc_ht=scontent.fpnh8-1.fna&_nc_gid=LQG6qCVEb8NAmoC71ZwFTA&oh=00_AfXVb5-Jsz1fwPI52r_7kFp68wGpqpfwBM1ROUCs43IRNg&oe=68AF44D2" alt="Organizers Team">
+                        <div class="overlay">
+                            <i class="material-icons">groups_2</i>
+                            <p>Organizers Team</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="gallery-item group">
+                    <div class="gallery-item-inner">
+                        <img src="https://scontent.fpnh8-2.fna.fbcdn.net/v/t39.30808-6/486178818_1195269219051702_5111359419364504906_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=127cfc&_nc_eui2=AeHvNsnNKwDxrvmgV6rxGu1hCwKQZ3mv7wkLApBnea_vCQNUmzxsytiQXXr1musb-b7DLbQO9dlYjJ7GpuIIbu11&_nc_ohc=w57jKZkxxlgQ7kNvwFnm6WF&_nc_oc=AdmIB_WNXOskIoMqQKdzCIND4GAq_bdhB05PUi8VtrMqRgTw4kqU91cBV5f2bII1sDQ&_nc_zt=23&_nc_ht=scontent.fpnh8-2.fna&_nc_gid=iLSmT8yQEpk9gX5X57ByeQ&oh=00_AfU4OSf5G47goqDHVTzSB9EHJRLrsThitOEIO0JWwyfjwA&oe=68AF5141" alt="Networking Session">
+                        <div class="overlay">
+                            <i class="material-icons">connect_without_contact</i>
+                            <p>Networking Session</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="gallery-item group">
+                    <div class="gallery-item-inner">
+                        <img src="https://scontent.fpnh8-1.fna.fbcdn.net/v/t39.30808-6/486560550_1195267315718559_9154762814443897316_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=127cfc&_nc_eui2=AeGrwjAEpicIFNCuvSTGNWGOWdMbLgjbYThZ0xsuCNthOKVnGU7mcF7k4EGjhOYONugM0NT92xN3ZM_hFJ7j2AJS&_nc_ohc=nht4S_ObPgMQ7kNvwFadGN0&_nc_oc=Adm6rYM_3lsRcLx0Z-Jj6zjpIj0yqczaWPXkYnI3vRpd5A7DSHds3dMCeetwNWn-3cQ&_nc_zt=23&_nc_ht=scontent.fpnh8-1.fna&_nc_gid=QiwP-XXqodjxo2my0wPcNg&oh=00_AfW8D8YigKmdWNaLfKlNwK7y6j0k8vj5H8LW2FQQWURYfw&oe=68AF5FF7" alt="Discussion Group">
+                        <div class="overlay">
+                            <i class="material-icons">group_work</i>
+                            <p>Discussion Group</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="gallery-item group">
+                    <div class="gallery-item-inner">
+                        <img src="https://scontent.fpnh8-1.fna.fbcdn.net/v/t39.30808-6/486542070_1195269579051666_5391022533496498643_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=127cfc&_nc_eui2=AeGc0CkwflTJSRdwm4ZkjOMowvRzYBWRy1zC9HNgFZHLXEaGgwzylubyWi6_LtkMBw9IzMA9RAKrDW99SkzvsP8o&_nc_ohc=ZOTq-CuHd5EQ7kNvwE0-ypg&_nc_oc=Adl1VYp5fnTylLjlbf0RLxoRxuCkEpsE9jtL35a6IQA2tapl6VxWWS1xRB-tQSpdQdw&_nc_zt=23&_nc_ht=scontent.fpnh8-1.fna&_nc_gid=KCsy3qCbeJei6R_JAfE9Hg&oh=00_AfV4mE-YxFMA_OvZy1vSV8rAXwnuCHsrKhwT6QUZHlQbLA&oe=68AF6B3B" alt="Professional Discussion">
+                        <div class="overlay">
+                            <i class="material-icons">record_voice_over</i>
+                            <p>Professional Discussion</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="gallery-item group">
+                    <div class="gallery-item-inner">
+                        <img src="https://scontent.fpnh8-3.fna.fbcdn.net/v/t39.30808-6/485397658_1192802492631708_7497535525586810646_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=127cfc&_nc_eui2=AeFzLBB0U5YnnIsMkHlc7oLs3E1zOi2EcwDcTXM6LYRzAEOmrFoHDTjqCMF4HizTwSBAe_ywg0lp5_xTylVN8HeT&_nc_ohc=HCQQEdEyiL8Q7kNvwEr8xqe&_nc_oc=Adn1XrdYcxQzG66Re3QA2mpGIdodXnODmNrVfiEDk_bEj2QTq2McSMtAIDXvu81zOa8&_nc_zt=23&_nc_ht=scontent.fpnh8-3.fna&_nc_gid=ULvzspFGw_23BOYGB7QyIw&oh=00_AfXgOIEJcIV3PfTMEBmcylbAjFxDPCPxYjtgTCfZcWM1Zw&oe=68AF5491" alt="One-on-One Discussion">
+                        <div class="overlay">
+                            <i class="material-icons">person_2</i>
+                            <p>One-on-One Discussion</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="gallery-item group">
+                    <div class="gallery-item-inner">
+                        <img src="https://scontent.fpnh8-1.fna.fbcdn.net/v/t39.30808-6/486042091_1192802495965041_9000790305582144938_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=127cfc&_nc_eui2=AeHvnU3RVLz0J1_Kf3UCdOcy0gLIIlzBth7SAsgiXMG2Hti7R6O9M428tNjykzAbBXlyMB0QbNR6LbaZmBHnsqRr&_nc_ohc=A96sWYewPRsQ7kNvwF89p83&_nc_oc=AdlsHlM3zFG_ntGNA4iEoc5AYsZS_mW4bVoSTd0gM6VYozj6yS98YLpnIJUQ0LIYry4&_nc_zt=23&_nc_ht=scontent.fpnh8-1.fna&_nc_gid=ErxRywVajhrlsarKCnzhGQ&oh=00_AfUUmirNzaNtfJA4ylDF01FuTQSlODs5gw_u-i2fU0ovPg&oe=68AF4D86" alt="International Participants">
+                        <div class="overlay">
+                            <i class="material-icons">public</i>
+                            <p>International Participants</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="gallery-item group">
+                    <div class="gallery-item-inner">
+                        <img src="https://scontent.fpnh8-2.fna.fbcdn.net/v/t39.30808-6/485144107_1192802585965032_5456013638313818114_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=127cfc&_nc_eui2=AeFamwQ5oV0GPLX9jzhKa3BFaSjtYw3HUDFpKO1jDcdQMY-VJo9CuSi9ju_9MfsSvXO6iDzNowEJu4YfPRaJkLBv&_nc_ohc=39HsyxZSvhYQ7kNvwGfeEg8&_nc_oc=Adm9USm7EP5Fqc6YUWl8cROD7FlyxiCnEaJo1b5rLaD1_7vlfIV63tOY_yqGNp69_QY&_nc_zt=23&_nc_ht=scontent.fpnh8-2.fna&_nc_gid=fztCIcO47cB_zZEvFnzcUg&oh=00_AfXgK07La4UAzNsHuqPjMnWxhKD4SaL4ZMBhN7E2FDSFhA&oe=68AF4798" alt="Conference Attendees">
+                        <div class="overlay">
+                            <i class="material-icons">groups</i>
+                            <p>Conference Attendees</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-item group">
+                    <div class="gallery-item-inner">
+                        <img src="https://scontent.fpnh8-1.fna.fbcdn.net/v/t39.30808-6/485354333_1192799955965295_3073343414279660022_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=127cfc&_nc_eui2=AeG_6Dz3LWcEP4ruIGvPpKb_N3--3jJImwc3f77eMkibB-bVHS2TTx9n2YVywF9aWrU588SXyOtP6zp9QeSVj3m6&_nc_ohc=ulZziCw8gZIQ7kNvwG2lIFh&_nc_oc=AdlJlMMFTHAKnL-YW0OgfgJAUsv6OOAH7bnVq3N9ry1Vn3zexGPYd9PMvBB9inbVmkw&_nc_zt=23&_nc_ht=scontent.fpnh8-1.fna&_nc_gid=Xk8x6-3WJ81F7WjChzMCdQ&oh=00_AfVvoPTfWM8qfonY9dxROrNGkGchkM4IgHLqHmBHaxv8dw&oe=68AF3F94" alt="Conference Attendees">
+                        <div class="overlay">
+                            <i class="material-icons">groups</i>
+                            <p>Conference Attendees</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-item group">
+                    <div class="gallery-item-inner">
+                        <img src="https://scontent.fpnh8-2.fna.fbcdn.net/v/t39.30808-6/486091378_1192800082631949_5702386900139108461_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=127cfc&_nc_eui2=AeEjjHHMGKrDnhQ3W_5AY0F0L1feGgwvzm4vV94aDC_ObuJf6YQV97LyWDcrClrHcI2VU1KmTk7dhUh_D5r6xGsK&_nc_ohc=YtMCEeaCsmMQ7kNvwE4SvT_&_nc_oc=AdlWeaXrciUDsg48Y5GI7vQulBskAWN8Pcxc8RzS5MIjL_02ZBwN7G7GwVgmowo2eV8&_nc_zt=23&_nc_ht=scontent.fpnh8-2.fna&_nc_gid=mECcUXu-nsaZAyQjof4h1w&oh=00_AfW-Yr2ZBpRsAbHkRINlESeNsRV7neR8sshuh48AFEockQ&oe=68AF5280" alt="Conference Attendees">
+                        <div class="overlay">
+                            <i class="material-icons">groups</i>
+                            <p>Conference Attendees</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-item group">
+                    <div class="gallery-item-inner">
+                        <img src="https://scontent.fpnh8-3.fna.fbcdn.net/v/t39.30808-6/486108186_1192800165965274_2879675335008402839_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=127cfc&_nc_eui2=AeFbR8vBMG9kHOCD6vlYIK42nxCRvwRg4ZOfEJG_BGDhk4IQBR3T0m_1G768i2kKWjlpKzF9dnpySOhuPMEflHio&_nc_ohc=cdBW9XUAyNIQ7kNvwFr4Y-U&_nc_oc=Adnl7Ats3Aw9YB1oOShiMKmDa1WcZGu0b6PRhADpcZfCaGy0RqbY6cl8nJiT-zhRKI0&_nc_zt=23&_nc_ht=scontent.fpnh8-3.fna&_nc_gid=WZNsx9Eoav0U-i7ZJ9WAjA&oh=00_AfVIKk__W6PR7ETYW2GJP9qlzX7AEJlT5f59PbNYC8h79Q&oe=68AF60A5" alt="Conference Attendees">
+                        <div class="overlay">
+                            <i class="material-icons">groups</i>
+                            <p>Conference Attendees</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-item group">
+                    <div class="gallery-item-inner">
+                        <img src="https://scontent.fpnh8-1.fna.fbcdn.net/v/t39.30808-6/485151760_1192800119298612_1638559102692359748_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=127cfc&_nc_eui2=AeEFiJptgrngdAinmnHd9h1sqYBuxInHm86pgG7EicebzlSiSU5s7xTLhVe5gYUP-GK1R_rLkEuf-qLswbnYxl0U&_nc_ohc=RRexFCgbt5EQ7kNvwFysoQe&_nc_oc=Adms214W2jgydi2OFXLbFGHJ_mwKO8Uw2xWaKshUl5w3lTpLPxphfOXJ-8aVN_k30MY&_nc_zt=23&_nc_ht=scontent.fpnh8-1.fna&_nc_gid=qt29h5QSGzb4svMWkpnC2Q&oh=00_AfU3RvZhGVjL4r4va17eYCcdNM3WBGitQGYBxl8wM61EUw&oe=68AF5C0C" alt="Conference Attendees">
+                        <div class="overlay">
+                            <i class="material-icons">groups</i>
+                            <p>Conference Attendees</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-item group">
+                    <div class="gallery-item-inner">
+                        <img src="https://scontent.fpnh8-3.fna.fbcdn.net/v/t39.30808-6/485678752_1192800075965283_6839737031353947603_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=127cfc&_nc_eui2=AeHhES6XwB093212LqrEI9MpmilpAXn0eI2aKWkBefR4jc8yhks3rBgHoTKMKsYHENDVL0u0WxxujtqZFdi0nYAV&_nc_ohc=zhNgwhZXhD4Q7kNvwHg1QaQ&_nc_oc=Adm0_QGuu9ulpb5w7ZJT_27JGBR0pHwYVMUH--k2Dpf9WJMHyTCI2-yLwP8BGaPnGlU&_nc_zt=23&_nc_ht=scontent.fpnh8-3.fna&_nc_gid=aI2aVd23w2fzC3peyq8ZcQ&oh=00_AfUDownLE9KMviiUDNO-cTykGp7bj6OOdck2KdDuqoCmxg&oe=68AF4C7B" alt="Conference Attendees">
+                        <div class="overlay">
+                            <i class="material-icons">groups</i>
+                            <p>Conference Attendees</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-item group">
+                    <div class="gallery-item-inner">
+                        <img src="https://scontent.fpnh8-3.fna.fbcdn.net/v/t39.30808-6/485355153_1192799982631959_6747324208023991083_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=127cfc&_nc_eui2=AeFf67YE6ZHS_NZr6QuKU0xsehTPOlb584Z6FM86Vvnzhu1sChvRES-0n9LFB-xL82bDUAHTVERp-QVWroKVuW3E&_nc_ohc=8xfsesBNE3gQ7kNvwEL0Pg0&_nc_oc=Admw4FVGL26alVUZUwF0OtptT658O3lL0PXn-k902qSNv1kwvuMS9bZN0Hug_eFsoM4&_nc_zt=23&_nc_ht=scontent.fpnh8-3.fna&_nc_gid=KjeTZwXrF3_UePFF_FpNSw&oh=00_AfXySDpUjuoKj5FE_ZXzEsW5qrHkTnpZVMBtWggkeNXjkQ&oe=68AF72D6" alt="Conference Attendees">
+                        <div class="overlay">
+                            <i class="material-icons">groups</i>
+                            <p>Conference Attendees</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-item group">
+                    <div class="gallery-item-inner">
+                        <img src="https://scontent.fpnh8-1.fna.fbcdn.net/v/t39.30808-6/485145606_1192799975965293_1517727405835603596_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=127cfc&_nc_eui2=AeFylZ3Of_mTRhctOZTIeJ8eMEzJhg0Ap3wwTMmGDQCnfDwKsvFiR5MYK1frcAmGfjB_ucgm08CWXsghHAj8Ae1u&_nc_ohc=LcBpp7Wl-0kQ7kNvwE-MEAc&_nc_oc=AdnYC4QHTXMI_N0Da6oy19DuvO79yB52B2lXg2eZKBW8ILBNhGox04azDcrXJ5TM6yw&_nc_zt=23&_nc_ht=scontent.fpnh8-1.fna&_nc_gid=algpSh7dIJQkkGyyBWeZcQ&oh=00_AfVzkMvfrKKwHuHEJWnAnjybuGO9aMqwMQ9n82DEXdIRyg&oe=68AF68BB" alt="Conference Attendees">
+                        <div class="overlay">
+                            <i class="material-icons">groups</i>
+                            <p>Conference Attendees</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modal for full photo view -->
+    <div id="imageModal" class="modal">
+        <span class="close">&times;</span>
+        <div class="modal-nav">
+            <div class="nav-btn prev-btn">&lt;</div>
+            <div class="nav-btn next-btn">&gt;</div>
+        </div>
+        <img class="modal-content" id="modalImage">
+        <div class="modal-caption" id="modalCaption"></div>
+    </div>
+    
+    <div class="footer">
+        <p>© 2025 Cambodia - Korea Pediatric Heart Forum. All rights reserved.</p>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const filterContainer = document.querySelector(".gallery-filter");
+            const galleryItems = document.querySelectorAll(".gallery-item");
+            
+            filterContainer.addEventListener("click", (event) => {
+                if(event.target.classList.contains("filter-item")){
+                    // deactivate existing active 'filter-item'
+                    filterContainer.querySelector(".active").classList.remove("active");
+                    // activate new 'filter-item'
+                    event.target.classList.add("active");
+                    
+                    const filterValue = event.target.getAttribute("data-filter");
+                    
+                    galleryItems.forEach((item) => {
+                        if(item.classList.contains(filterValue) || filterValue === 'all'){
+                            item.classList.remove("hide");
+                            item.classList.add("show");
+                        }
+                        else{
+                            item.classList.remove("show");
+                            item.classList.add("hide");
+                        }
+                    });
+                }
+            });
+            
+            // Modal functionality
+            const modal = document.getElementById("imageModal");
+            const modalImg = document.getElementById("modalImage");
+            const captionText = document.getElementById("modalCaption");
+            const closeBtn = document.querySelector(".close");
+            const prevBtn = document.querySelector(".prev-btn");
+            const nextBtn = document.querySelector(".next-btn");
+            
+            let currentImageIndex = 0;
+            let images = [];
+            
+            // Initialize images array and add click events
+            galleryItems.forEach((item, index) => {
+                const img = item.querySelector("img");
+                images.push({
+                    src: img.src,
+                    alt: img.alt
+                });
+                
+                item.addEventListener("click", () => {
+                    currentImageIndex = index;
+                    openModal();
+                });
+            });
+            
+            function openModal() {
+                modal.classList.add("show");
+                modalImg.src = images[currentImageIndex].src;
+                captionText.textContent = images[currentImageIndex].alt;
+                document.body.style.overflow = "hidden"; // Prevent scrolling
+            }
+            
+            function closeModal() {
+                modal.classList.remove("show");
+                document.body.style.overflow = "auto"; // Enable scrolling
+            }
+            
+            function navigateImage(direction) {
+                currentImageIndex += direction;
+                
+                // Loop around if at beginning or end
+                if (currentImageIndex < 0) {
+                    currentImageIndex = images.length - 1;
+                } else if (currentImageIndex >= images.length) {
+                    currentImageIndex = 0;
+                }
+                
+                modalImg.src = images[currentImageIndex].src;
+                captionText.textContent = images[currentImageIndex].alt;
+            }
+            
+            // Event listeners for modal controls
+            closeBtn.addEventListener("click", closeModal);
+            
+            prevBtn.addEventListener("click", (e) => {
+                e.stopPropagation();
+                navigateImage(-1);
+            });
+            
+            nextBtn.addEventListener("click", (e) => {
+                e.stopPropagation();
+                navigateImage(1);
+            });
+            
+            // Close modal when clicking outside image
+            modal.addEventListener("click", (e) => {
+                if (e.target === modal) {
+                    closeModal();
+                }
+            });
+            
+            // Keyboard navigation
+            document.addEventListener("keydown", (e) => {
+                if (modal.classList.contains("show")) {
+                    if (e.key === "Escape") {
+                        closeModal();
+                    } else if (e.key === "ArrowLeft") {
+                        navigateImage(-1);
+                    } else if (e.key === "ArrowRight") {
+                        navigateImage(1);
+                    }
+                }
+            });
+            
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Form</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5; /* Light gray background */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .login-container {
+            display: flex;
+            width: 100%;
+            max-width: 900px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        
+        .login-form {
+            flex: 1;
+            padding: 40px;
+        }
+        
+        .login-form h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        
+        .login-form p {
+            color: #666;
+            margin-bottom: 25px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 500;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        
+        .form-group input:focus {
+            border-color: #8B4513; /* Brown color for focus */
+            outline: none;
+        }
+        
+        .password-container {
+            position: relative;
+        }
+        
+        .password-toggle {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #666;
+        }
+        
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+        
+        .checkbox-group input {
+            margin-right: 10px;
+            width: auto;
+        }
+        
+        .checkbox-group label {
+            margin-bottom: 5px;
+            font-weight: normal;
+            color: #555;
+        }
+        
+        .submit-btn {
+            background-color: #8B4513; /* Brown color */
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            width: 100%;
+            transition: background-color 0.3s;
+        }
+        
+        .submit-btn:hover {
+            background-color: #713410; /* Darker brown on hover */
+        }
+        
+        .login-image {
+            flex: 1;
+            background-image: url('https://static.wixstatic.com/media/866047_2301dd55ed4a4d9fa12d70a986842fb5~mv2.jpg/v1/crop/x_0,y_617,w_3700,h_4933/fill/w_860,h_1144,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/%EA%B9%80%EC%9A%B0%EC%A0%95-%EC%9B%90%EC%9E%A5%EB%8B%98_%EC%A0%80%EC%9A%A9%EB%9F%89.jpg');
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+        
+        .image-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(0, 82, 155, 0.7), rgba(0, 42, 92, 0.7));
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .image-overlay h2 {
+            font-size: 32px;
+            margin-bottom: 15px;
+        }
+        
+        .image-overlay p {
+            font-size: 18px;
+            max-width: 80%;
+        }
+        
+        .gold-text {
+            color: #FFD700; /* Gold color for text */
+            font-weight: bold;
+        }
+        
+        @media (max-width: 768px) {
+            .login-container {
+                flex-direction: column;
+            }
+            
+            .login-image {
+                min-height: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-form">
+            <h1>Log In</h1>
+            <p>Please fill out this form to log in to your account</p>
+            
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username" placeholder="Enter your username" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <div class="password-container">
+                        <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                        <i class="fas fa-eye password-toggle" id="togglePassword"></i>
+                    </div>
+                </div>
+                
+                <div class="checkbox-group">
+                    <input type="checkbox" id="terms" name="terms" required>
+                    <label for="terms">Remember Me</label>
+                </div>
+                
+                <button type="submit" class="submit-btn">Submit</button>
+            </form>
+        </div>
+        
+        <div class="login-image">
+            <div class="image-overlay">
+                <h2><span class="gold-text">Welcome</span> Back</h2>
+                <p>Access your <span class="gold-text">HEBORN</span> account and manage your profile with ease</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Toggle password visibility
+        const togglePassword = document.getElementById('togglePassword');
+        const passwordInput = document.getElementById('password');
+        
+        togglePassword.addEventListener('click', function() {
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
+            
+            // Toggle the eye icon
+            this.classList.toggle('fa-eye');
+            this.classList.toggle('fa-eye-slash');
+        });
+        
+        // Auto-save terms checkbox state to localStorage
+        const termsCheckbox = document.getElementById('terms');
+        termsCheckbox.addEventListener('change', function() {
+            localStorage.setItem('termsChecked', this.checked);
+        });
+        // Restore checkbox state on page load
+        if (localStorage.getItem('termsChecked') === 'true') {
+            termsCheckbox.checked = true;
+        }
+
+        // Auto-save username and password fields
+        const usernameInput = document.getElementById('username');
+        const passwordInputField = document.getElementById('password');
+
+        // Only save username and password when terms checkbox is clicked
+        termsCheckbox.addEventListener('change', function() {
+            localStorage.setItem('termsChecked', this.checked);
+            if (this.checked) {
+                localStorage.setItem('savedUsername', usernameInput.value);
+                localStorage.setItem('savedPassword', passwordInputField.value);
+            } else {
+                localStorage.removeItem('savedUsername');
+                localStorage.removeItem('savedPassword');
+            }
+        });
+
+        // Restore username and password on page load only if termsChecked is true
+        if (localStorage.getItem('termsChecked') === 'true') {
+            if (localStorage.getItem('savedUsername')) {
+                usernameInput.value = localStorage.getItem('savedUsername');
+            }
+            if (localStorage.getItem('savedPassword')) {
+                passwordInputField.value = localStorage.getItem('savedPassword');
+            }
+        }
+        
+        // Form submission
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const termsAccepted = document.getElementById('terms').checked;
+            
+            if (!username || !password) {
+                alert('Please fill in all fields');
+                return;
+            }
+            
+            if (!termsAccepted) {
+                alert('Please accept the terms and privacy policy');
+                return;
+            }
+            
+            // Here you would typically send the data to a server
+                alert('Login successful!');
+                window.location.href = 'cloud.html'; // Redirect to cloud.html after login
+        });
+    </script>
+</body>
+</html>
